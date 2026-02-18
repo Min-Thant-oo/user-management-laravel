@@ -6,7 +6,7 @@ Simple user management app using Laravel and Bootstrap.
 
 1.  Clone repo
     ```bash
-    git clone <repository-url>
+    git clone https://github.com/Min-Thant-oo/user-management-laravel
     cd user-management-laravel
     ```
 
