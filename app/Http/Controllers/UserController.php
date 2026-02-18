@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\User;
+use App\Models\Role;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
 
@@ -13,7 +14,7 @@ class UserController extends Controller
      */
     public function index()
     {
-        $users = User::paginate(10);
+        $users = User::with('role')->paginate(10);
         return view('users.index', compact('users'));
     }
 
@@ -22,7 +23,8 @@ class UserController extends Controller
      */
     public function create()
     {
-        return view('users.create');
+        $roles = Role::all();
+        return view('users.create', compact('roles'));
     }
 
     /**
@@ -34,11 +36,10 @@ class UserController extends Controller
             'name' => 'required',
             'email' => 'required|email|unique:users',
             'password' => 'required|min:6',
-            'is_admin' => 'sometimes|boolean'
+            'role_id' => 'required|exists:roles,id'
         ]);
 
         $validated['password'] = bcrypt($validated['password']);
-        $validated['is_admin'] = $request->has('is_admin');
 
         User::create($validated);
 
@@ -58,7 +59,8 @@ class UserController extends Controller
      */
     public function edit(User $user)
     {
-        return view('users.edit', compact('user'));
+        $roles = Role::all();
+        return view('users.edit', compact('user', 'roles'));
     }
 
     /**
@@ -70,7 +72,7 @@ class UserController extends Controller
             'name' => 'required',
             'email' => ['required', 'email', Rule::unique('users')->ignore($user->id)],
             'password' => 'nullable|min:6',
-            'is_admin' => 'sometimes|boolean'
+            'role_id' => 'required|exists:roles,id'
         ]);
 
         if ($request->filled('password')) {
@@ -79,8 +81,6 @@ class UserController extends Controller
         else {
             unset($validated['password']);
         }
-
-        $validated['is_admin'] = $request->has('is_admin');
 
         $user->update($validated);
 

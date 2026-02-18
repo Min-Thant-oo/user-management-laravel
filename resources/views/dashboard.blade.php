@@ -20,11 +20,14 @@
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav me-auto">
                     <li class="nav-item">
-                        <a class="nav-link active" aria-current="page" href="{{ route('dashboard') }}">Dashboard</a>
+                        <a class="nav-link" href="{{ route('dashboard') }}">Dashboard</a>
                     </li>
-                    @if(auth()->user()->is_admin)
+                    @if(auth()->user()->isAdmin())
                     <li class="nav-item">
                         <a class="nav-link" href="{{ route('users.index') }}">Manage Users</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ route('roles.index') }}">Manage Roles</a>
                     </li>
                     @endif
                 </ul>
@@ -34,19 +37,4 @@
                 </form>
             </div>
         </div>
-    </nav>
-
-    <div class="container mt-5">
-        <div class="card shadow-sm">
-            <div class="card-body">
-                <h3 class="card-title">Welcome, {{ auth()->user()->name }}!</h3>
-                <p class="card-text">You are logged in as a {{ auth()->user()->is_admin ? 'Admin' : 'Regular User' }}.
-                </p>
-            </div>
-        </div>
-    </div>
-
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
-</body>
-
-</html>
+    </nav></html>

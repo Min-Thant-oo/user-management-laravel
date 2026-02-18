@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\RoleController;
 
 Route::get('/', function () {
     return redirect('/login');
@@ -18,3 +19,4 @@ Route::get('/dashboard', function () {
 })->middleware('auth')->name('dashboard');
 
 Route::resource('users', UserController::class)->middleware(['auth', 'admin']);
+Route::resource('roles', RoleController::class)->middleware(['auth', 'admin']);

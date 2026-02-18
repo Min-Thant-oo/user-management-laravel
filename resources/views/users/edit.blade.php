@@ -60,10 +60,16 @@
                                 current)</small></label>
                         <input type="password" class="form-control" id="password" name="password">
                     </div>
-                    <div class="mb-3 form-check">
-                        <input type="checkbox" class="form-check-input" id="is_admin" name="is_admin" value="1" {{
-                            old('is_admin', $user->is_admin) ? 'checked' : '' }}>
-                        <label class="form-check-label" for="is_admin">Is Admin?</label>
+                    <div class="mb-3">
+                        <label for="role_id" class="form-label">Role</label>
+                        <select class="form-select text-capitalize" id="role_id" name="role_id" required>
+                            @foreach($roles as $role)
+                            <option value="{{ $role->id }}" {{ old('role_id', $user->role_id) == $role->id ? 'selected'
+                                : '' }}>
+                                {{ $role->name }}
+                            </option>
+                            @endforeach
+                        </select>
                     </div>
                     <button type="submit" class="btn btn-primary">Update User</button>
                     <a href="{{ route('users.index') }}" class="btn btn-secondary">Cancel</a>
